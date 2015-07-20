@@ -59,7 +59,9 @@ $sql = "INSERT INTO users (id, email, username, password, date_created, date_mod
 //on donne une valeur aux paramètres de la requête
 		$sth->bindValue(":email", $email);
 		$sth->bindValue(":username", $username);
-		$sth->bindValue(":password", $password);
+
+		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+		$sth->bindValue(":password", $hashedPassword);
 
 		$sth->execute();
 	}
