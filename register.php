@@ -4,6 +4,7 @@ session_start();
 //connexion à la base de données
 include("functions.php");
 include("config.php");
+include("vendor/autoload.php")
 //tester la soumission du formulaire avec un print_r()
 pr($_POST);
 //si le form est soumis...
@@ -87,7 +88,8 @@ $sql = "INSERT INTO users (id, email, username, password, date_created, date_mod
 
 /*
 |||||| Attention : PHP 5.5 ou plus !!!!!! ||||||||
-||||| sinon depuis 5.3.7 https://github.com/ircmaxell/password_compat ||||||
+||||| sinon depuis 5.3.7 https://github.com/ircmaxell/password_compat ensuiste aller dans lib
+et faire un include de password.php||||||
 */
 		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 		$sth->bindValue(":password", $hashedPassword);
