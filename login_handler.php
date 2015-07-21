@@ -31,16 +31,28 @@ $sql = "SELECT * FROM users
 
 			if ($isValidPassword){
 			//on préfère ne pas stocker le mot de passe en session,
-			//toutes les données seront disponibles sur toutes les pages !
+			//même si pas très grave...
 				unset($foundUser['password']);
+
+			//on stocke l'array de l'utilisateur en session
+			//toutes les données seront disponibles sur toutes les pages !
 				$_SESSION["user"] = $foundUser;
-				echo "good password !";
+				
+			//redirection vers la page protégée
+			header("Location: profile.php");
+			die();
+
 			}
 			else{
-				echo "wrong password !";
+			//redirection vers login avec message d'erreur
+			$_SESSION['login_error'] = "Mauvais mot de passe !";
+			header("Location: login.php");
+			die();
 			}
 		}
 		else{
 			//redirection vers login avec message d'erreur
-			echo "not found !";
+			$_SESSION['login_error'] = "Utilisateur non trouvé !";
+			header("Location: login.php");
+			die();
 		}
