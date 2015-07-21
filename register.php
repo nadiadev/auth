@@ -78,8 +78,23 @@ if( ! empty($_POST)){
 	if($password != $password_confirm){
 		$error ="Vos mots de passe ne correspondent pas !";
 	}
+//longueur minimale
 	elseif(strlen($password) <= 6){
 	$error = "Veuillez saisir un mot de passe d'au moins 7 caractères !";
+}
+else {
+//le mot de passe contient au moins une lettre ?
+	$containsLetter = preg_match('/[a-zA-Z]/', $password);
+//le mot de passe contient au moins un chiffre ?
+	$containsDigit = preg_match('/\d/', $password);
+//le mot de passe contient au moins un autre caractère ?
+	$containsSpecial = preg_match('/[^a-zA-Z\d]/', $password);
+
+//si une des conditions n'est pas remple...error
+	if (!$containsLetter || !$containsDigit || !$containsSpecial){
+		$error = "Veuillez choisir un mot de passe avec au moins une lettre,
+		 un chiffre et un caractère spécial.";
+	}
 }
 
 //si on n'a pas d'erreur
