@@ -43,6 +43,8 @@ if( ! empty($_POST)){
 			$error = "Cet email est déjà enregistré ici !";
 		}
 	}
+//expression rationnelle pour nos usernames 
+	$usernameRegexp = "/^[\p{L}0-9._-]{2,100}$/u";
 //username vide ?
 	if(empty($username)){
 		$error = "Veuillez renseigner vote pseudo !";
@@ -50,6 +52,14 @@ if( ! empty($_POST)){
 //username trop long ?
 	elseif(strlen($username) > 250){
 		$error = "Votre pseudo est long, trop long";
+	}
+//username est un email ?
+	elseif(filter_var($username, FILTER_VALIDATE_EMAIL)){
+		$error = "Veuillez ne pas utiliser d'email comme pseudo !";
+	}
+//contient uniquement des lettres, des chiffres et des tirets et underscore
+	elseif(!preg_match($usernameRegexp, $username)){
+		$error = "Votre pseudo doit correspondre à /^[\p{L}0-9._-]{2,100}$/u";
 	}
 	else{
 	//email déjà présent dans la base ?
