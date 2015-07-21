@@ -6,7 +6,8 @@ include("config.php");
 include("functions.php");
 include("vendor/autoload.php");
 //tester la soumission du formulaire avec un print_r()
-pr($_POST);
+//pr($_POST);
+$error = "";
 //si le form est soumis...
 if( ! empty($_POST)){
 	include("db.php");
@@ -90,7 +91,7 @@ else {
 //le mot de passe contient au moins un autre caractère ?
 	$containsSpecial = preg_match('/[^a-zA-Z\d]/', $password);
 
-//si une des conditions n'est pas remple...error
+//si une des conditions n'est pas remplie...error
 	if (!$containsLetter || !$containsDigit || !$containsSpecial){
 		$error = "Veuillez choisir un mot de passe avec au moins une lettre,
 		 un chiffre et un caractère spécial.";
@@ -113,13 +114,31 @@ $sql = "INSERT INTO users (id, email, username, password, date_created, date_mod
 
 /*
 |||||| Attention : PHP 5.5 ou plus !!!!!! ||||||||
-||||| sinon depuis 5.3.7 https://github.com/ircmaxell/password_compat ensuiste aller dans lib
+||||| sinon depuis 5.3.7 https://github.com/ircmaxell/password_compat ensuite aller dans lib
 et faire un include de password.php||||||
 */
 		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 		$sth->bindValue(":password", $hashedPassword);
 
 		$sth->execute();
+
+	//connecter l'utilisateur programmatiquement
+	//on va rechercher toutes les infos qu'on vient s'insérer (sans le mot de passe)
+	//afin qu'elles soient structurées comme sur la page de login
+		$sql = "SELECT id, email, username, date_created, date_modified
+		FROM users
+		WHERE id = :id";
+
+		$sth = $dbh->prepare($sql);
+		$sth->bindValue(":id", $dbh->lastInsertId());
+		$sth->execute();
+		$user = $sth->fetch();
+
+	//on met l'array dans la session pour connecter le user
+		$_SESSION['user'] = $user;
+	//puis on redirige vers la page protégée
+		header("Location: profile.php");
+		die();
 	}
 }
 ?>
