@@ -2,9 +2,9 @@
 
 session_start();
 //connexion à la base de données
-include("functions.php");
 include("config.php");
-include("vendor/autoload.php")
+include("functions.php");
+include("vendor/autoload.php");
 //tester la soumission du formulaire avec un print_r()
 pr($_POST);
 //si le form est soumis...
@@ -68,7 +68,7 @@ if( ! empty($_POST)){
 	if($password != $password_confirm){
 		$error ="Vos mots de passe ne correspondent pas !";
 	}
-	elseif(strlen($password)) <= 6){
+	elseif(strlen($password) <= 6){
 	$error = "Veuillez saisir un mot de passe d'au moins 7 caractères !";
 }
 
