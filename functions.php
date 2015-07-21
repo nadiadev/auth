@@ -18,3 +18,13 @@
 
 		return $frenchDate;
 	}
+
+	//si l'utilisateur n'est pas connecté, on le redirige vers login.php (voir fichier profile.php L 13)
+	//ne pas oublier de mettre session_start(); sinon la fonction ne sera pas appelée
+	function lock()
+	{
+		if (empty($_SESSION['user'])){
+		header("Location: login.php");
+		die();
+		}
+	}
