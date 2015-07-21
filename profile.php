@@ -8,11 +8,9 @@
 
 	//vérification que l'utilisateur est bien connecté
 
-	//si l'utilisateur n'est pas connecté, on le redirige vers login.php
-	if (empty($_SESSION['user'])){
-		header("Location: login.php");
-		die();
-	}
+	
+	//voir functions.php
+	lock();
 
 	//sinon... on ne fait rien et la page ci-dessous s'affichera
 ?>
