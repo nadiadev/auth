@@ -1,4 +1,9 @@
 <?php
+
+//url racine
+	//define("ROOTURL", "http://localhost/auth");
+
+
 //connexion à la base de données
     //define("DBHOST", ""); //ip du serveur MySQL
     //define("DBUSER", ""); 		//username MySQL

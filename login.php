@@ -10,14 +10,14 @@ session_start();
 	<title>Connexion !</title>
 </head>
 <body>
-
+	
 	<form method="POST" action="login_handler.php">
 		<input type="text" name="email" placeholder="Email or username">
 		<input type="password" name="password" placeholder="Password">
 		<input type="submit" value="OK">
 	</form>
 	<?php
-	//si on a strocké un message d'erreur (dans login_handler.php) 
+	//si on a stocké un message d'erreur (dans login_handler.php) 
 	if(!empty($_SESSION['login_error'])){
 		//affiche le message d'erreur
 		echo $_SESSION['login_error'];
